@@ -1,5 +1,5 @@
 import React from 'react';
-import SignInBtn from './signInBtn/SignInBtn';
+import SignInBtn from '../signInBtn/SignInBtn';
 
 import './CreatePost.css';
 

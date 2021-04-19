@@ -1,5 +1,5 @@
 import React from 'react';
-import CreatePost from '../containers/CreatePost';
+import CreatePost from '../containers/createPost/CreatePost';
 import Navbar from '../containers/navbar/Navbar';
 import SignInBtn from '../containers/signInBtn/SignInBtn';
 
