@@ -39,3 +39,10 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
+
+#image-preview {
+	display: none;
+	max-height: 80px;
+	margin: 12px 0px;
+	border-radius: 5px;
+}
