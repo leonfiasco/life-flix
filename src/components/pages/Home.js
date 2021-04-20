@@ -1,5 +1,6 @@
 import React from 'react';
 import CreatePost from '../containers/createPost/CreatePost';
+import Feed from '../containers/feed/Feed';
 import Navbar from '../containers/navbar/Navbar';
 import SignInBtn from '../containers/signInBtn/SignInBtn';
 
@@ -10,6 +11,7 @@ function home() {
 		<div className='home'>
 			<Navbar />
 			<CreatePost />
+			<Feed />
 		</div>
 	);
 }
