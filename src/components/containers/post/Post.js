@@ -1,10 +1,35 @@
 import React, { useState, useContext } from 'react';
-
+import CommentInput from '../comment-input/CommentInput';
 import Comment from '../comments/Comments';
+
+import { storage, db } from '../../../firebase';
 
 import './Post.css';
 
 function Post({ profileURL, username, id, photoURL, caption, comments }) {
+	const deletePost = () => {
+		// delete image from firebase storage
+
+		// get ref to the image file I would like to delete
+		const imageRef = storage.refFromURL(photoURL);
+
+		// delete the file
+		imageRef
+			.delete()
+			.then(() => {
+				console.log('delete successful');
+			})
+			.catch((err) => console.log(`My Error!!: ${err}`));
+
+		// delete the post info from firebase firestore
+		db
+			.collection('posts')
+			.doc(id)
+			.delete()
+			.then(() => console.log('delete post info successfully!!'))
+			.catch((err) => console.log(`Error post info delete ${err}`));
+	};
+
 	return (
 		<div className='post'>
 			<div className='post_header'>
@@ -12,7 +37,9 @@ function Post({ profileURL, username, id, photoURL, caption, comments }) {
 					<img className='post_profilePic' src={profileURL} alt='' />
 					<p style={{ marginLeft: '8px' }}>{username}</p>
 				</div>
-				<button className='post_delete'>Delete</button>
+				<button className='post_delete' onClick={deletePost}>
+					Delete
+				</button>
 			</div>
 			<div className='post_center'>
 				<img className='post_photoURL' src={photoURL} />
@@ -23,6 +50,9 @@ function Post({ profileURL, username, id, photoURL, caption, comments }) {
 					{caption}
 				</p>
 			</div>
+
+			<CommentInput id={id} />
+
 			{comments ? (
 				comments.map((comment) => (
 					<Comment username={comment.username} caption={comment.comment} />
