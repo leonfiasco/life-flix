@@ -1,17 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../../../firebase';
 import Post from '../post/Post';
 
 import './Feed.css';
 
 function Feed() {
+	const [posts, setPosts] = useState([]);
+
+	useEffect(() => {
+		// gets a snapshot of the db so I'm able to map through
+		db.collection('posts').onSnapshot((snapshot) => {
+			setPosts(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
+		});
+	}, []);
+
 	return (
 		<div className='feed'>
-			<Post
-				username='Kendrick'
-				profileURL='https://images.sk-static.com/images/media/profile_images/artists/3277856/huge_avatar'
-				photoURL='https://www.dailynews.com/wp-content/uploads/2020/06/LDN-L-PROTEST-RIDE-0608.dk_.01-1.jpg'
-				caption='Compton cowboys'
-			/>
+			{posts.map(({ id, post }) => {
+				return (
+					<Post
+						key={id}
+						id={id}
+						username={post.username}
+						profileURL={post.profileUrl}
+						photoURL={post.photoUrl}
+						caption={post.caption}
+					/>
+				);
+			})}
 		</div>
 	);
 }

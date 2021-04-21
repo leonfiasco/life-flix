@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
 
+import Comment from '../comments/Comments';
+
 import './Post.css';
 
 function Post({ profileURL, username, id, photoURL, caption, comments }) {
@@ -17,10 +19,17 @@ function Post({ profileURL, username, id, photoURL, caption, comments }) {
 			</div>
 			<div>
 				<p>
-					<span>{username}</span>
+					<span style={{ fontWeight: '500', marginRight: '6px' }}>{username}</span>
 					{caption}
 				</p>
 			</div>
+			{comments ? (
+				comments.map((comment) => (
+					<Comment username={comment.username} caption={comment.comment} />
+				))
+			) : (
+				<></>
+			)}
 		</div>
 	);
 }
