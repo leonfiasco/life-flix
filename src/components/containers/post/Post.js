@@ -5,8 +5,11 @@ import Comment from '../comments/Comments';
 import { storage, db } from '../../../firebase';
 
 import './Post.css';
+import { UserContext } from '../../contextApi/user';
 
 function Post({ profileURL, username, id, photoURL, caption, comments }) {
+	const [user, _] = useContext(UserContext).user;
+
 	const deletePost = () => {
 		// delete image from firebase storage
 
@@ -51,8 +54,6 @@ function Post({ profileURL, username, id, photoURL, caption, comments }) {
 				</p>
 			</div>
 
-			<CommentInput id={id} />
-
 			{comments ? (
 				comments.map((comment) => (
 					<Comment username={comment.username} caption={comment.comment} />
@@ -60,6 +61,8 @@ function Post({ profileURL, username, id, photoURL, caption, comments }) {
 			) : (
 				<></>
 			)}
+
+			{user ? <CommentInput id={id} comments={comments} /> : <></>}
 		</div>
 	);
 }

@@ -1,9 +1,9 @@
-.commentInput {
+#commentInput {
 	display: flex;
 	justify-content: space-between;
 }
 
-textarea {
+#commentInput_textarea {
 	border: none;
 	width: 100%;
 	resize: none;
@@ -16,7 +16,8 @@ textarea {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-button {
+#comment_btn {
 	background-color: white;
 	border: none;
+	outline: none;
 }

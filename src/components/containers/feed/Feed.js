@@ -25,6 +25,7 @@ function Feed() {
 						profileURL={post.profileUrl}
 						photoURL={post.photoUrl}
 						caption={post.caption}
+						comments={post.comments}
 					/>
 				);
 			})}

@@ -1,12 +1,46 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { db } from '../../../firebase';
+import { UserContext } from '../../contextApi/user';
 
-import './CommentInput.css';
+import './Comment_input.css';
 
-function CommentInput({ id }) {
+function CommentInput({ id, comments }) {
+	const [comment, setComment] = useState('');
+	const [user, setUser] = useContext(UserContext).user;
+	const [commentArray, setCommentArray] = useState(comments ? comments : []);
+
+	const addComment = () => {
+		commentArray.push({
+			comment,
+			username: user.email.replace('@gmail.com', '').toLowerCase(),
+		});
+
+		db
+			.collection('posts')
+			.doc(id)
+			.update({
+				comments: commentArray,
+			})
+			.then(() => {
+				setComment('');
+			})
+			.catch((err) => {
+				console.log(`Error ${err}`);
+			});
+	};
+
 	return (
-		<div classname='commentInput'>
-			<textarea classname='commentInput_textarea' rows='1'></textarea>
-			<button>Post</button>
+		<div id='commentInput'>
+			<textarea
+				id='commentInput_textarea'
+				rows='1'
+				placeholder='Write a comment...'
+				value={comment}
+				onChange={(e) => setComment(e.target.value)}
+			></textarea>
+			<button id='comment_btn' onClick={addComment}>
+				Post
+			</button>
 		</div>
 	);
 }
